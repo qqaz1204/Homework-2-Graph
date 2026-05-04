@@ -1,4 +1,140 @@
-# 41143263
+## 作業二 Graph
+#　解題說明
+本題要求實作一個 Graph 嘿對
+解題策略
+使用 adjacency list 來儲存 graph。
+每個節點會記錄與其相連的節點。
+DFS 使用遞迴方式進行走訪。
+BFS 使用 queue 來實現層級走訪。
+從指定的起點開始進行 traversal。
+程式實作
+``` cpp
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+class Graph {
+private:
+    int V;
+    vector<vector<int>> adj;
+
+    void DFSUtil(int v, vector<bool>& visited) {
+        visited[v] = true;
+        cout << v << " ";
+
+        for (int u : adj[v]) {
+            if (!visited[u])
+                DFSUtil(u, visited);
+        }
+    }
+
+public:
+    Graph(int V) {
+        this->V = V;
+        adj.resize(V);
+    }
+
+    void AddEdge(int v, int w) {
+        adj[v].push_back(w);
+        adj[w].push_back(v);
+    }
+
+    void DFS(int start) {
+        vector<bool> visited(V, false);
+        DFSUtil(start, visited);
+        cout << endl;
+    }
+
+    void BFS(int start) {
+        vector<bool> visited(V, false);
+        queue<int> q;
+
+        visited[start] = true;
+        q.push(start);
+
+        while (!q.empty()) {
+            int v = q.front();
+            q.pop();
+            cout << v << " ";
+
+            for (int u : adj[v]) {
+                if (!visited[u]) {
+                    visited[u] = true;
+                    q.push(u);
+                }
+            }
+        }
+        cout << endl;
+    }
+};
+```
+效能分析
+演算法   時間複雜度
+---
+DFS      O(V + E)
+BFS      O(V + E)
+空間複雜度：O(V)
+測試與驗證
+測試   起點   預期輸出    實際輸出
+---
+DFS    0      0 1 3 2 4   0 1 3 2 4
+BFS    0      0 1 2 3 4   0 1 2 3 4
+結論
+本程式成功實作 Graph 並支援 DFS 與 BFS。
+可以正確走訪所有節點。
+不同起點可能會有不同結果。
+討論
+優點： - 使用 adjacency list 節省空間 - DFS 與 BFS 都可以正確運作
+缺點： - 沒有處理有向圖的情況 - 沒有處理加權邊 - 若 graph
+很大，遞迴可能會有問題
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 作業一
 
